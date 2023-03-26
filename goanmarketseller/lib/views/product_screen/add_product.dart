@@ -34,7 +34,6 @@ class Addproduct extends StatelessWidget {
             hint: "eg. BMW",
             label: "Product name",
 
-
           )],
         ),
       ),

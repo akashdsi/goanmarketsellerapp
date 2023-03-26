@@ -3,6 +3,7 @@ import 'package:goanmarketseller/views/widgets/textstyle.dart';
 
 Widget CustomeTextField({label, hint, controller,isDesc = false}) {
   return TextFormField(
+    style: TextStyle(color: Colors.black),
     maxLines: isDesc ? 4:1,
 
     decoration: InputDecoration(
