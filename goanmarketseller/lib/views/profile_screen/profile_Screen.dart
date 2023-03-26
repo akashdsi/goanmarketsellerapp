@@ -29,7 +29,7 @@ class profileScreen extends StatelessWidget {
           IconButton(
             onPressed: () {
               Get.to(() => Editeprofilescreen(
-                   username : controller.snapshotData['vendors_name']));
+                  username: controller.snapshotData['vendors_name']));
             },
             icon: Icon(Icons.edit),
           ),
@@ -54,11 +54,19 @@ class profileScreen extends StatelessWidget {
             return Column(
               children: [
                 ListTile(
-                  leading: Image.asset(imgproduct)
-                      .box
-                      .roundedFull
-                      .clip(Clip.antiAlias)
-                      .make(),
+                  leading: controller.snapshotData['imageUrl'] == ' '
+                      ? Image.asset(
+                          imgproduct,
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ).box.roundedFull.clip(Clip.antiAlias).make()
+                      : Image.network(controller.snapshotData['imageUrl'],
+                          width: 100, ),
+                  // leading: Image.asset(imgproduct)
+                  //     .box
+                  //     .roundedFull
+                  //     .clip(Clip.antiAlias)
+                  //     .make(),
                   title: boldText(
                       text: "${controller.snapshotData['vendor_name']}"),
                   subtitle:
