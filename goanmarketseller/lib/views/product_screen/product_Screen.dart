@@ -62,7 +62,9 @@ class productsScreen extends StatelessWidget {
                         data.length,
                         (index) => ListTile(
                               onTap: () {
-                                Get.to(() => ProductDetails(data: data[index],));
+                                Get.to(() => ProductDetails(
+                                      data: data[index],
+                                    ));
                               },
                               leading: Image.network(
                                 data[index]['p_img'][0],
@@ -80,10 +82,15 @@ class productsScreen extends StatelessWidget {
                                       text: "\$ ${data[index]['p_price']}",
                                       color: darkGrey),
                                   10.widthBox,
-                                  boldText(text:data[index]['is_featured'] == true ? "featured" : '' , color: green),
+                                  boldText(
+                                      text: data[index]['is_featured'] == true
+                                          ? "featured"
+                                          : '',
+                                      color: green),
                                 ],
                               ),
                               trailing: VxPopupMenu(
+                                arrowSize: 0.0,
                                 child: Icon(Icons.more_vert_rounded),
                                 menuBuilder: () => Column(
                                   children: [
@@ -92,18 +99,54 @@ class productsScreen extends StatelessWidget {
                                       shrinkWrap: true,
                                       children: List.generate(
                                         popupmenutitles.length,
-                                        (index) => Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: [
-                                              Icon(popupmenuIconslist[index]),
-                                              10.widthBox,
-                                              normalText(
-                                                text: popupmenutitles[index],
-                                                color: darkGrey,
-                                              ),
-                                            ],
-                                          ).onTap(() {}),
+                                        (i) => Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: Row(children: [
+                                            Icon(
+                                              popupmenuIconslist[i],
+                                              color: data[index]
+                                                              ['featured_id'] ==
+                                                          currentUser!.uid &&
+                                                      i == 0
+                                                  ? green
+                                                  : darkGrey,
+                                            ),
+                                            10.widthBox,
+                                            normalText(
+                                                text:
+                                                    data[index]['featured_id'] ==
+                                                                currentUser!
+                                                                    .uid &&
+                                                            i == 0
+                                                        ? "Removed featured"
+                                                        : popupmenutitles[i],
+                                                color: darkGrey),
+                                          ]).onTap(() {
+                                            switch (i) {
+                                              case 0:
+                                                if (data[index]
+                                                        ['is_featured'] ==
+                                                    true) {
+                                                  controller.removeFeatured(
+                                                       data[index].id);
+                                                  VxToast.show(context,
+                                                      msg: "Removed");
+                                                } else {
+                                                  controller.addFeatured(
+                                                      data[index].id);
+                                                  VxToast.show(context,
+                                                      msg: "Added");
+                                                }
+                                                break;
+                                              case 1:
+                                                break;
+                                              case 2:
+                                                controller.removeProducts(data[index].id);
+                                                VxToast.show(context, msg: "Product removed");
+                                                break;
+                                              default:
+                                            }
+                                          }),
                                         ),
                                       ),
                                     ),
